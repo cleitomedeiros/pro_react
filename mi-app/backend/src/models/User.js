@@ -1,8 +1,10 @@
 const db = require('../config/db');
-const Favorite = require('./Favorite'); // Adicione esta linha
+const Favorite = require('./Favorite');
+const Review = require('./Review');
+const Order = require('./Order');
+const OrderItem = require('./OrderItem');
 
 const User = {
-    // Criar tabela de usuários
     createTable: async () => {
         const sql = `
             CREATE TABLE IF NOT EXISTS users (
@@ -19,11 +21,12 @@ const User = {
         await db.run(sql);
         console.log('✅ Tabela users criada/verificada');
         
-        // 🚨 IMPORTANTE: Criar tabela de favoritos também
         await Favorite.createTable();
+        await Order.createTable();
+        await OrderItem.createTable();
+        await Review.createTable();
     },
 
-    // Criar novo usuário
     create: async (userData) => {
         const { name, email, password, phone } = userData;
         const sql = 'INSERT INTO users (name, email, password, phone) VALUES (?, ?, ?, ?)';
@@ -31,14 +34,12 @@ const User = {
         return result.lastID;
     },
 
-    // Buscar usuário por email
     findByEmail: async (email) => {
         const sql = 'SELECT * FROM users WHERE email = ?';
         const row = await db.get(sql, [email]);
         return row;
     },
 
-    // Buscar usuário por ID
     findById: async (id) => {
         const sql = 'SELECT id, name, email, phone, role, created_at FROM users WHERE id = ?';
         const row = await db.get(sql, [id]);

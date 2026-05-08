@@ -162,7 +162,7 @@ const Cart = ({ cartItems, updateQuantity, removeFromCart, currentLang, t }) => 
             
             <div className="secure-payment">
               <i className="fas fa-shield-alt"></i>
-              <span>{t('Pagamento 100% seguro com escrow', '100% secure payment with escrow')}</span>
+              <span>{t('Pago 100% seguro con escrow', '100% secure payment with escrow')}</span>
             </div>
           </div>
         </div>

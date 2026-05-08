@@ -6,6 +6,7 @@ const db = require('./config/db');
 const User = require('./models/User');
 const authRoutes = require('./routes/authRoutes');
 const favoriteRoutes = require('./routes/favoriteRoutes');
+const reviewRoutes = require('./routes/reviewRoutes');
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ const initDatabase = async () => {
 // Rotas
 app.use('/api/auth', authRoutes);
 app.use('/api/favorites', favoriteRoutes);
+app.use('/api/reviews', reviewRoutes);
 // Rota de teste
 app.get('/api/health', (req, res) => {
     res.json({ status: 'OK', message: 'Servidor rodando!' });

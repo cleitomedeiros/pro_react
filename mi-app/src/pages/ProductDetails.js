@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { listings } from '../data/listings';  // 🔴 IMPORTAR DO ARQUIVO CENTRAL
+import Reviews from '../components/Reviews';
 
 const ProductDetails = ({ currentLang, t, addToCart, onToggleFav, favorites }) => {
     const { id } = useParams();
@@ -27,7 +28,7 @@ const ProductDetails = ({ currentLang, t, addToCart, onToggleFav, favorites }) =
         return (
             <div className="container" style={{ padding: '60px 0', textAlign: 'center' }}>
                 <i className="fas fa-spinner fa-spin" style={{ fontSize: '40px', color: '#667eea' }}></i>
-                <p>{t('Carregando...', 'Loading...')}</p>
+                <p>{t('Cargando...', 'Loading...')}</p>
             </div>
         );
     }
@@ -36,10 +37,10 @@ const ProductDetails = ({ currentLang, t, addToCart, onToggleFav, favorites }) =
         return (
             <div className="container" style={{ padding: '60px 0', textAlign: 'center' }}>
                 <i className="fas fa-exclamation-triangle" style={{ fontSize: '60px', color: '#dc2626' }}></i>
-                <h2>{t('Produto não encontrado', 'Product not found')}</h2>
-                <p>{t('O produto que você procura não existe ou foi removido.', 'The product you are looking for does not exist or has been removed.')}</p>
+                <h2>{t('Producto no encontrado', 'Product not found')}</h2>
+                <p>{t('El producto que usted busca no existe o fue removido.', 'The product you are looking for does not exist or has been removed.')}</p>
                 <Link to="/" className="btn-primary" style={{ marginTop: '20px' }}>
-                    {t('Voltar para loja', 'Back to store')}
+                    {t('Volver a la tienda', 'Back to store')}
                 </Link>
             </div>
         );
@@ -50,7 +51,7 @@ const ProductDetails = ({ currentLang, t, addToCart, onToggleFav, favorites }) =
             <div className="container">
                 {/* Breadcrumb */}
                 <div className="breadcrumb">
-                    <Link to="/">{t('Início', 'Home')}</Link>
+                    <Link to="/">{t('Inicio', 'Home')}</Link>
                     <span> &gt; </span>
                     <Link to="/">{t(product.categoryEs, product.categoryEn)}</Link>
                     <span> &gt; </span>
@@ -77,9 +78,14 @@ const ProductDetails = ({ currentLang, t, addToCart, onToggleFav, favorites }) =
                     </div>
 
                     {/* Informações do Produto */}
-                    <div className="product-info">
+                    <div className="product-info"> <Reviews 
+    productId={product.id}
+    currentLang={currentLang}
+    t={t}
+/>
                         <div className="product-category">{t(product.categoryEs, product.categoryEn)}</div>
                         <h1>{t(product.titleEs, product.titleEn)}</h1>
+                        
                         
                         <div className="product-rating">
                             <div className="stars">
@@ -87,7 +93,7 @@ const ProductDetails = ({ currentLang, t, addToCart, onToggleFav, favorites }) =
                                     <i key={i} className={i < Math.floor(product.rating) ? 'fas fa-star' : i < product.rating ? 'fas fa-star-half-alt' : 'far fa-star'}></i>
                                 ))}
                             </div>
-                            <span>({product.reviews} {t('avaliações', 'reviews')})</span>
+                            <span>({product.reviews} {t('Valoraciones', 'reviews')})</span>
                         </div>
 
                         <div className="product-price">
@@ -100,7 +106,7 @@ const ProductDetails = ({ currentLang, t, addToCart, onToggleFav, favorites }) =
                         </div>
 
                         <div className="product-description">
-                            <h3>{t('Descrição', 'Description')}</h3>
+                            <h3>{t('Descripción', 'Description')}</h3>
                             <p>{t(product.descriptionEs || product.titleEs, product.descriptionEn || product.titleEn)}</p>
                         </div>
 
@@ -127,7 +133,7 @@ const ProductDetails = ({ currentLang, t, addToCart, onToggleFav, favorites }) =
                             <div>
                                 <h4>{t('Vendedor', 'Seller')}</h4>
                                 <p>{product.seller}</p>
-                                <button className="btn-contact">{t('Contatar Vendedor', 'Contact Seller')}</button>
+                                <button className="btn-contact">{t('Contactar Vendedor', 'Contact Seller')}</button>
                             </div>
                         </div>
                     </div>
