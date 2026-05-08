@@ -1,7 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
+import LocationPicker from './LocationPicker';
 
 const Hero = ({ currentLang }) => {
   const t = (es, en) => currentLang === 'es' ? es : en;
+
+  const [showLocationModal, setShowLocationModal] = useState(false);
+  const [userLocation, setUserLocation] = useState({
+    lat: 9.9281,
+    lng: -84.0907,
+    address: 'San Jose, Costa Rica'
+  });
+
+  // Função para quando selecionar a localização
+  const handleLocationSelect = (location) => {
+    setUserLocation(prev => ({
+      ...prev,
+      lat: location.lat,
+      lng: location.lng,
+      address: location.address
+    }));
+    // Fecha o modal automaticamente
+    setShowLocationModal(false);
+  };
 
   return (
     <section className="hero">
@@ -20,7 +40,7 @@ const Hero = ({ currentLang }) => {
             </div>
             <div className="hero-feature">
               <i className="fas fa-check-circle"></i>
-              <span>{t('Verificacion de Identidad', 'Identity Verification')}</span>
+              <span>{t('Verificación de Identidad', 'Identity Verification')}</span>
             </div>
             <div className="hero-feature">
               <i className="fas fa-headset"></i>
@@ -28,17 +48,22 @@ const Hero = ({ currentLang }) => {
             </div>
           </div>
         </div>
+        
         <div className="hero-card">
           <h3>{t('Ubicacion Actual', 'Current Location')}</h3>
-          <div className="location-selector">
+          <div className="location-selector" onClick={() => setShowLocationModal(true)} style={{ cursor: 'pointer' }}>
             <i className="fas fa-map-marker-alt"></i>
             <div>
-              <div style={{ fontWeight: 600 }}>San Jose, Costa Rica</div>
-              <div style={{ fontSize: '12px', opacity: 0.8 }}>{t('Cambiar ubicacion', 'Change location')}</div>
+              <div style={{ fontWeight: 600 }}>{userLocation.address}</div>
+              <div style={{ fontSize: '12px', opacity: 0.8 }}>
+                <i className="fas fa-pen"></i> {t('Cambiar ubicacion', 'Change location')}
+              </div>
             </div>
             <i className="fas fa-chevron-down" style={{ marginLeft: 'auto' }}></i>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+          
+          {/* Estatísticas */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginTop: '15px' }}>
             <div style={{ background: 'rgba(255,255,255,0.1)', padding: '15px', borderRadius: '10px', textAlign: 'center' }}>
               <div style={{ fontSize: '24px', fontWeight: 700 }}>2,450+</div>
               <div style={{ fontSize: '12px', opacity: 0.8 }}>{t('Profesionales', 'Professionals')}</div>
@@ -50,6 +75,22 @@ const Hero = ({ currentLang }) => {
           </div>
         </div>
       </div>
+
+      {/* Modal do mapa - SEM OS BOTÕES */}
+      {showLocationModal && (
+        <div className="modal-overlay active" onClick={() => setShowLocationModal(false)}>
+          <div className="modal" style={{ maxWidth: '600px', width: '90%' }} onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setShowLocationModal(false)}>&times;</button>
+            <h3>{t('Selecionar Localização', 'Select Location')}</h3>
+            <LocationPicker 
+              onLocationSelect={handleLocationSelect}
+              initialLocation={userLocation}
+              t={t}
+            />
+            {/* 🔴 BOTÕES REMOVIDOS */}
+          </div>
+        </div>
+      )}
     </section>
   );
 };

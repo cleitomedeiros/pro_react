@@ -15,7 +15,7 @@ const HeaderMain = ({ searchTerm, setSearchTerm, cartCount, onLoginClick, onPubl
             type="text" 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder={t('Buscar servicios, vehiculos, productos...', 'Search services, vehicles, products...')}
+            placeholder={t('Buscar servicios, vehículos, productos...', 'Search services, vehicles, products...')}
           />
           <button><i className="fas fa-search"></i></button>
         </div>

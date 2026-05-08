@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 
@@ -16,7 +16,9 @@ import Footer from './components/Footer';
 import Modal from './components/Modal';
 import Toast from './components/Toast';
 import Cart from './pages/Cart';
-import { authService } from './services/api';
+import FavoritesPage from './pages/Favorites';
+import ProductDetails from './pages/ProductDetails';  // 🔴 APENAS UM IMPORT
+import { authService, favoritesService } from './services/api';
 
 // Componente de rota protegida
 const PrivateRoute = ({ children }) => {
@@ -28,7 +30,6 @@ const PrivateRoute = ({ children }) => {
 
 function App() {
   const [currentUser, setCurrentUser] = useState(authService.getCurrentUser());
-  
   const [currentLang, setCurrentLang] = useState('es');
   const [favorites, setFavorites] = useState([]);
   const [cartItems, setCartItems] = useState([]);
@@ -82,20 +83,44 @@ function App() {
     showToast(currentLang === 'es' ? 'Logout realizado!' : 'Logged out!');
   };
 
-  // ========== FUNÇÕES DO CARRINHO E FAVORITOS ==========
-  const toggleFav = (id) => {
-    setFavorites(prev => {
-      const isFav = prev.includes(id);
-      if (isFav) {
-        showToast(currentLang === 'en' ? 'Removed from favorites' : 'Eliminado de favoritos');
-        return prev.filter(favId => favId !== id);
-      } else {
-        showToast(currentLang === 'en' ? 'Added to favorites' : 'Agregado a favoritos');
-        return [...prev, id];
+  // ========== FUNÇÃO PARA CARREGAR FAVORITOS ==========
+  const loadFavorites = async () => {
+    if (authService.isAuthenticated()) {
+      try {
+        const favoriteIds = await favoritesService.list();
+        setFavorites(favoriteIds);
+      } catch (error) {
+        console.error('Erro ao carregar favoritos:', error);
       }
-    });
+    }
   };
 
+  // ========== CARREGAR FAVORITOS QUANDO USUÁRIO LOGAR ==========
+  useEffect(() => {
+    loadFavorites();
+  }, [currentUser]);
+
+  // ========== FUNÇÃO TOGGLE FAV ==========
+  const toggleFav = async (id) => {
+    const isFav = favorites.includes(id);
+    
+    try {
+      if (isFav) {
+        await favoritesService.remove(id);
+        setFavorites(prev => prev.filter(favId => favId !== id));
+        showToast(currentLang === 'en' ? 'Removed from favorites' : 'Eliminado de favoritos');
+      } else {
+        await favoritesService.add(id);
+        setFavorites(prev => [...prev, id]);
+        showToast(currentLang === 'en' ? 'Added to favorites' : 'Agregado a favoritos');
+      }
+    } catch (error) {
+      console.error('Erro ao alternar favorito:', error);
+      showToast(currentLang === 'en' ? 'Error' : 'Error al guardar favorito');
+    }
+  };
+
+  // ========== FUNÇÕES DO CARRINHO ==========
   const addToCart = (item) => {
     setCartItems(prev => {
       const existing = prev.find(i => i.id === item.id);
@@ -119,7 +144,7 @@ function App() {
     showToast(currentLang === 'es' ? 'Eliminado del carrito' : 'Removed from cart');
   };
 
-  // ========== COMPONENTES DAS PÁGINAS ==========
+  // ========== COMPONENTE DA PÁGINA INICIAL ==========
   const HomePage = () => (
     <>
       <Hero currentLang={currentLang} />
@@ -139,21 +164,6 @@ function App() {
     </>
   );
 
-  const FavoritesPage = () => (
-    <div className="container" style={{ padding: '40px 0', minHeight: '60vh' }}>
-      <h2>{t('Mis Favoritos', 'My Favorites')}</h2>
-      {favorites.length === 0 ? (
-        <p>{t('No tienes favoritos aún', 'You have no favorites yet')}</p>
-      ) : (
-        <div className="favorites-grid">
-          {favorites.map(id => (
-            <div key={id}>Item {id}</div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-
   // ========== RENDER ==========
   return (
     <div className="App">
@@ -169,14 +179,34 @@ function App() {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
+        
+        {/* 🔴 ROTA DO PRODUTO DETALHES */}
+        <Route 
+          path="/produto/:id" 
+          element={
+            <ProductDetails 
+              currentLang={currentLang}
+              t={t}
+              addToCart={addToCart}
+              onToggleFav={toggleFav}
+              favorites={favorites}
+            />
+          } 
+        />
+        
         <Route 
           path="/favoritos" 
           element={
             <PrivateRoute>
-              <FavoritesPage />
+              <FavoritesPage 
+                currentLang={currentLang}
+                t={t}
+                onToggleFav={toggleFav}
+              />
             </PrivateRoute>
           } 
         />
+        
         <Route 
           path="/carrito" 
           element={
@@ -283,17 +313,17 @@ const LoginForm = ({ onLogin, onRegister, t }) => {
         </div>
       )}
       <button type="submit" className="btn-primary">
-        {isLoginMode ? t('Ingresar', 'Sign In') : t('Registrarse', 'Sign Up')}
+        {isLoginMode ? t('Ingresar', 'Sign In') : t('Registrar', 'Sign Up')}
       </button>
       
       <p style={{ marginTop: '15px', textAlign: 'center' }}>
-        {isLoginMode ? t('Não tem conta?', 'No account?') : t('Já tem conta?', 'Already have an account?')}
+        {isLoginMode ? t('No tiene cuenta?', 'No account?') : t('Ya tiene cuenta?', 'Already have an account?')}
         <button 
           type="button" 
           onClick={() => setIsLoginMode(!isLoginMode)}
           style={{ background: 'none', border: 'none', color: 'var(--primary)', cursor: 'pointer' }}
         >
-          {isLoginMode ? t('Registre-se', 'Sign up') : t('Faça login', 'Login')}
+          {isLoginMode ? t('Registrar', 'Sign up') : t('Iniciar sesion', 'Login')}
         </button>
       </p>
     </form>

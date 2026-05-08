@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const Favorite = require('./Favorite'); // Adicione esta linha
 
 const User = {
     // Criar tabela de usuários
@@ -17,6 +18,9 @@ const User = {
         `;
         await db.run(sql);
         console.log('✅ Tabela users criada/verificada');
+        
+        // 🚨 IMPORTANTE: Criar tabela de favoritos também
+        await Favorite.createTable();
     },
 
     // Criar novo usuário

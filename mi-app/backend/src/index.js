@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const db = require('./config/db');
 const User = require('./models/User');
 const authRoutes = require('./routes/authRoutes');
+const favoriteRoutes = require('./routes/favoriteRoutes');
 
 dotenv.config();
 
@@ -31,7 +32,7 @@ const initDatabase = async () => {
 
 // Rotas
 app.use('/api/auth', authRoutes);
-
+app.use('/api/favorites', favoriteRoutes);
 // Rota de teste
 app.get('/api/health', (req, res) => {
     res.json({ status: 'OK', message: 'Servidor rodando!' });

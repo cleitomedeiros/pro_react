@@ -18,14 +18,14 @@ const Cart = ({ cartItems, updateQuantity, removeFromCart, currentLang, t }) => 
   
   const applyCoupon = () => {
     if (couponCode === 'DESC10') {
-      alert(t('Cupom aplicado! 10% de desconto', 'Coupon applied! 10% discount'));
+      alert(t('Cupón aplicado! 10% de descuento', 'Coupon applied! 10% discount'));
     } else {
-      alert(t('Cupom inválido', 'Invalid coupon'));
+      alert(t('Cupón inválido', 'Invalid coupon'));
     }
   };
   
   const handleCheckout = () => {
-    alert(t('Redirecionando para o checkout...', 'Redirecting to checkout...'));
+    alert(t('Redirecionando para el checkout...', 'Redirecting to checkout...'));
     // Aqui você pode navegar para a página de checkout
     // navigate('/checkout');
   };
@@ -34,8 +34,8 @@ const Cart = ({ cartItems, updateQuantity, removeFromCart, currentLang, t }) => 
     return (
       <div className="cart-empty">
         <i className="fas fa-shopping-cart" style={{ fontSize: '80px', color: '#ccc', marginBottom: '20px' }}></i>
-        <h2>{t('Seu carrinho está vazio', 'Your cart is empty')}</h2>
-        <p>{t('Parece que você ainda não adicionou nenhum item ao carrinho.', 'Looks like you haven\'t added any items to your cart yet.')}</p>
+        <h2>{t('Tu carrito está vacío', 'Your cart is empty')}</h2>
+        <p>{t('Parece que usted aún no ha agregado ningún artículo a su carrito.', 'Looks like you haven\'t added any items to your cart yet.')}</p>
         <Link to="/" className="btn-primary">
           <i className="fas fa-store"></i> {t('Continuar Comprando', 'Continue Shopping')}
         </Link>
@@ -47,7 +47,7 @@ const Cart = ({ cartItems, updateQuantity, removeFromCart, currentLang, t }) => 
     <div className="cart-page">
       <div className="container">
         <h1 className="cart-title">
-          <i className="fas fa-shopping-cart"></i> {t('Meu Carrinho', 'My Cart')}
+          <i className="fas fa-shopping-cart"></i> {t('Mi Carrito', 'My Cart')}
           <span className="cart-count">({cartItems.length} {t('itens', 'items')})</span>
         </h1>
         
@@ -55,9 +55,9 @@ const Cart = ({ cartItems, updateQuantity, removeFromCart, currentLang, t }) => 
           {/* Lista de Itens do Carrinho */}
           <div className="cart-items">
             <div className="cart-header">
-              <div className="cart-col-product">{t('Produto', 'Product')}</div>
-              <div className="cart-col-price">{t('Preço', 'Price')}</div>
-              <div className="cart-col-quantity">{t('Quantidade', 'Quantity')}</div>
+              <div className="cart-col-product">{t('Producto', 'Product')}</div>
+              <div className="cart-col-price">{t('Precio', 'Price')}</div>
+              <div className="cart-col-quantity">{t('Cantidad', 'Quantity')}</div>
               <div className="cart-col-total">{t('Total', 'Total')}</div>
               <div className="cart-col-remove"></div>
             </div>
@@ -111,9 +111,9 @@ const Cart = ({ cartItems, updateQuantity, removeFromCart, currentLang, t }) => 
             ))}
           </div>
           
-          {/* Resumo do Pedido */}
+          {/* Resumen del Pedido */}
           <div className="cart-summary">
-            <h3>{t('Resumo do Pedido', 'Order Summary')}</h3>
+            <h3>{t('Resumen del Pedido', 'Order Summary')}</h3>
             
             <div className="summary-row">
               <span>{t('Subtotal', 'Subtotal')}</span>
@@ -122,13 +122,13 @@ const Cart = ({ cartItems, updateQuantity, removeFromCart, currentLang, t }) => 
             
             {discount > 0 && (
               <div className="summary-row discount">
-                <span>{t('Desconto', 'Discount')} (10%)</span>
+                <span>{t('Descuento', 'Discount')} (10%)</span>
                 <span>-₡{discount.toLocaleString()}</span>
               </div>
             )}
             
             <div className="summary-row">
-              <span>{t('Frete', 'Shipping')}</span>
+              <span>{t('Transporte', 'Shipping')}</span>
               <span>{shipping === 0 ? t('Grátis', 'Free') : `₡${shipping.toLocaleString()}`}</span>
             </div>
             
@@ -141,7 +141,7 @@ const Cart = ({ cartItems, updateQuantity, removeFromCart, currentLang, t }) => 
             <div className="coupon-section">
               <input
                 type="text"
-                placeholder={t('Código do cupom', 'Coupon code')}
+                placeholder={t('Código de descuento', 'Coupon code')}
                 value={couponCode}
                 onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
                 className="coupon-input"
@@ -153,7 +153,7 @@ const Cart = ({ cartItems, updateQuantity, removeFromCart, currentLang, t }) => 
             
             {/* Botão Checkout */}
             <button onClick={handleCheckout} className="checkout-btn">
-              <i className="fas fa-lock"></i> {t('Finalizar Compra', 'Checkout')}
+              <i className="fas fa-lock"></i> {t('Comprar', 'Checkout')}
             </button>
             
             <Link to="/" className="continue-shopping">

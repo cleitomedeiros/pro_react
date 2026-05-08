@@ -29,7 +29,7 @@ const HowItWorks = ({ currentLang }) => {
       num: '4', 
       titleEs: 'Recibe y Valora', 
       titleEn: 'Receive & Rate', 
-      descEs: 'Confirma la recepcion para liberar el pago al vendedor y deja tu calificacion.', 
+      descEs: 'Confirma la recepción para liberar el pago al vendedor y deja tu calificación.', 
       descEn: 'Confirm receipt to release payment to the seller and leave your rating.' 
     },
   ];

@@ -12,7 +12,7 @@ const Footer = ({ currentLang }) => {
               <i className="fas fa-shield-alt"></i>
               CostaMarket
             </a>
-            <p>{t('La plataforma lider en Costa Rica para compra, venta y contratacion de servicios profesionales con pagos 100% seguros.', 'The leading platform in Costa Rica for buying, selling and hiring professional services with 100% secure payments.')}</p>
+            <p>{t('La plataforma líder en Costa Rica para compra, venta y contratación de servicios profesionales con pagos 100% seguros.', 'The leading platform in Costa Rica for buying, selling and hiring professional services with 100% secure payments.')}</p>
             <div className="social-links">
               <a href="#"><i className="fab fa-facebook-f"></i></a>
               <a href="#"><i className="fab fa-instagram"></i></a>
@@ -26,17 +26,17 @@ const Footer = ({ currentLang }) => {
               <li><a href="#">{t('Dentistas', 'Dentists')}</a></li>
               <li><a href="#">{t('Medicos', 'Doctors')}</a></li>
               <li><a href="#">{t('Masajistas', 'Massage Therapists')}</a></li>
-              <li><a href="#">{t('Peluqueria', 'Hairdressing')}</a></li>
+              <li><a href="#">{t('Peluquería', 'Hairdressing')}</a></li>
               <li><a href="#">{t('Entrenadores', 'Trainers')}</a></li>
             </ul>
           </div>
           <div className="footer-col">
             <h4>{t('Productos', 'Products')}</h4>
             <ul>
-              <li><a href="#">{t('Vehiculos', 'Vehicles')}</a></li>
+              <li><a href="#">{t('Vehículos', 'Vehicles')}</a></li>
               <li><a href="#">{t('Motocicletas', 'Motorcycles')}</a></li>
               <li><a href="#">{t('Bicicletas', 'Bicycles')}</a></li>
-              <li><a href="#">{t('Tecnologia', 'Technology')}</a></li>
+              <li><a href="#">{t('Tecnología', 'Technology')}</a></li>
               <li><a href="#">{t('Hogar', 'Home')}</a></li>
             </ul>
           </div>
@@ -46,7 +46,7 @@ const Footer = ({ currentLang }) => {
               <li><a href="#">{t('Centro de Ayuda', 'Help Center')}</a></li>
               <li><a href="#">{t('Como funciona Escrow', 'How Escrow Works')}</a></li>
               <li><a href="#">{t('Seguridad', 'Security')}</a></li>
-              <li><a href="#">{t('Terminos y Condiciones', 'Terms & Conditions')}</a></li>
+              <li><a href="#">{t('Términos y Condiciones', 'Terms & Conditions')}</a></li>
               <li><a href="#">{t('Contacto', 'Contact')}</a></li>
             </ul>
           </div>

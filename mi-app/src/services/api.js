@@ -57,4 +57,40 @@ export const authService = {
     }
 };
 
+// 🔴 SERVIÇO DE FAVORITOS
+export const favoritesService = {
+    // Listar todos os favoritos do usuário
+    list: async () => {
+        const response = await api.get('/favorites');
+        return response.data.favorites;
+    },
+    
+    // Adicionar produto aos favoritos
+    add: async (productId) => {
+        const response = await api.post(`/favorites/${productId}`);
+        return response.data;
+    },
+    
+    // Remover produto dos favoritos
+    remove: async (productId) => {
+        const response = await api.delete(`/favorites/${productId}`);
+        return response.data;
+    },
+    
+    // Verificar se produto é favorito
+    check: async (productId) => {
+        const response = await api.get(`/favorites/check/${productId}`);
+        return response.data.isFavorite;
+    },
+    
+    // Sincronizar favoritos (alternar)
+    toggle: async (productId, currentStatus) => {
+        if (currentStatus) {
+            return await favoritesService.remove(productId);
+        } else {
+            return await favoritesService.add(productId);
+        }
+    }
+};
+
 export default api;

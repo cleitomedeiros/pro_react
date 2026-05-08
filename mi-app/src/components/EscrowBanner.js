@@ -15,7 +15,7 @@ const EscrowBanner = ({ currentLang }) => {
       <div className="container">
         <div className="escrow-banner">
           <div className="escrow-content">
-            <h3>{t('Como funciona la proteccion de pagos?', 'How does payment protection work?')}</h3>
+            <h3>{t('Como funciona la protección de pagos?', 'How does payment protection work?')}</h3>
             <p>{t('Nuestro sistema Escrow protege tanto al comprador como al vendedor. El dinero se mantiene seguro en nuestra plataforma hasta que ambas partes confirmen que todo esta correcto.', 'Our Escrow system protects both buyer and seller. Money is kept safe on our platform until both parties confirm everything is correct.')}</p>
             <div className="escrow-steps">
               {steps.map(step => (
