@@ -3,6 +3,7 @@ const Favorite = require('./Favorite');
 const Review = require('./Review');
 const Order = require('./Order');
 const OrderItem = require('./OrderItem');
+const Product = require('./Product');
 
 const User = {
     createTable: async () => {
@@ -25,6 +26,7 @@ const User = {
         await Order.createTable();
         await OrderItem.createTable();
         await Review.createTable();
+        await Product.createTable();
     },
 
     create: async (userData) => {

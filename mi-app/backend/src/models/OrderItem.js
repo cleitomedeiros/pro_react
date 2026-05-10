@@ -24,6 +24,7 @@ const OrderItem = {
             VALUES (?, ?, ?, ?, ?, 1)
         `;
         const result = await db.run(sql, [orderId, item.product_id, item.product_name, item.product_price, item.quantity]);
+        console.log(`✅ Item adicionado ao pedido ${orderId}, ID: ${result.lastID}`);
         return result.lastID;
     },
 
@@ -33,9 +34,11 @@ const OrderItem = {
     },
     
     disableReview: async (orderItemId) => {
+        console.log(`🔒 Desabilitando review para order_item ${orderItemId}`);
         const sql = 'UPDATE order_items SET can_review = 0 WHERE id = ?';
-        await db.run(sql, [orderItemId]);
-        console.log(`✅ Review desabilitado para order_item ${orderItemId}`);
+        const result = await db.run(sql, [orderItemId]);
+        console.log(`✅ Review desabilitado, affected: ${result.changes}`);
+        return result;
     }
 };
 

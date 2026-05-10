@@ -7,6 +7,7 @@ const User = require('./models/User');
 const authRoutes = require('./routes/authRoutes');
 const favoriteRoutes = require('./routes/favoriteRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
+const productRoutes = require('./routes/productRoutes');
 
 dotenv.config();
 
@@ -39,6 +40,9 @@ app.use('/api/reviews', reviewRoutes);
 app.get('/api/health', (req, res) => {
     res.json({ status: 'OK', message: 'Servidor rodando!' });
 });
+
+app.use('/api/products', productRoutes);
+app.use('/uploads', express.static('uploads'));
 
 // Iniciar servidor
 app.listen(PORT, async () => {

@@ -48,8 +48,7 @@ router.post('/:productId', authMiddleware, async (req, res) => {
         const userId = req.userId;
         const { rating, comment, orderItemId } = req.body;
         
-        console.log('✍️ Adicionando avaliação - Produto:', productId, 'Usuário:', userId, 'OrderItem:', orderItemId);
-        console.log('⭐ Nota:', rating, '💬 Comentário:', comment);
+        console.log('✍️ Adicionando avaliação - Produto:', productId, 'Usuário:', userId);
         
         if (!rating || rating < 1 || rating > 5) {
             return res.status(400).json({ message: 'Nota deve ser entre 1 e 5' });

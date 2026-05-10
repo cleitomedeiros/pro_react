@@ -19,6 +19,10 @@ import Cart from './pages/Cart';
 import FavoritesPage from './pages/Favorites';
 import ProductDetails from './pages/ProductDetails';  // 🔴 APENAS UM IMPORT
 import { authService, favoritesService } from './services/api';
+import SellerDashboard from './pages/Dashboard/SellerDashboard';
+import MyListings from './pages/Dashboard/MyListings';
+import CreateListing from './pages/Dashboard/CreateListing';
+import EditListing from './pages/Dashboard/EditListing';
 
 // Componente de rota protegida
 const PrivateRoute = ({ children }) => {
@@ -33,7 +37,7 @@ function App() {
   const [currentLang, setCurrentLang] = useState('es');
   const [favorites, setFavorites] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm] = useState('');
   const [loginOpen, setLoginOpen] = useState(false);
   const [publishOpen, setPublishOpen] = useState(false);
   const [toast, setToast] = useState({ message: '', isVisible: false });
@@ -193,6 +197,20 @@ function App() {
             />
           } 
         />
+
+        <Route 
+    path="/dashboard" 
+    element={
+        <PrivateRoute>
+            <SellerDashboard currentLang={currentLang} t={t} />
+        </PrivateRoute>
+    }
+>
+    <Route index element={<MyListings currentLang={currentLang} t={t} />} />
+    <Route path="mis-anuncios" element={<MyListings currentLang={currentLang} t={t} />} />
+    <Route path="crear-anuncio" element={<CreateListing currentLang={currentLang} t={t} />} />
+    <Route path="editar-anuncio/:id" element={<EditListing currentLang={currentLang} t={t} />} />
+</Route>
         
         <Route 
           path="/favoritos" 
